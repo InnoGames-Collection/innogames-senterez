@@ -21,16 +21,16 @@ export default {
       error: '',
       formValidMsg: {
         password: {
-          success: 'Luce bien',
-          error: 'muy corta'
+          success: 'Looks good',
+          error: 'Too short'
         },
         passwordRepit: {
-          success: 'Luce bien',
-          error: 'No coincide'
+          success: 'Looks good',
+          error: 'Passwords do not match'
         },
         user: {
-          success: 'Luce bien',
-          error: 'No menos de 4 ni más de 10'
+          success: 'Looks good',
+          error: 'Must be 4–10 characters'
         }
       }
     }
@@ -47,7 +47,7 @@ export default {
         return true
       }
       if (this.user.password.length < 5) {
-        this.formValidMsg.errorMsgPasswrd = 'corta la contraseña'
+        this.formValidMsg.errorMsgPasswrd = 'Password is too short'
         return false
       }
       return true

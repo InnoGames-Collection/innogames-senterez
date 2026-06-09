@@ -89,16 +89,22 @@ function findClientsSocketByRoomId(roomId) {
 }
 
 exports.IsValidSocketToken = (socket) => {
-    var token = socket.request._query.token;
-    var bearer = token.split(" ");
-    bearerToken = bearer[1];
-    var token = jwt.decode(bearerToken, {complete: true});
-    if (token) {
-        var headers = socket.handshake.headers;
-  // seguridad basica mismo ip
-  return token.payload.host===socket.handshake.address
-}
-return false
+  try {
+    var tokenQuery = socket.request._query.token;
+    if (!tokenQuery) {
+      return false;
+    }
+    var bearer = tokenQuery.split(' ');
+    var bearerToken = bearer.length > 1 ? bearer[1] : bearer[0];
+    var payload = jwt.verify(bearerToken, config.jwtSecret);
+    if (config.bindTokenToHost && payload.host && payload.host !== socket.handshake.address) {
+      return false;
+    }
+    socket.auth = payload;
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 var validMensaje=function(string){

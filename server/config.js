@@ -2,16 +2,18 @@
 var config = {
     db: {
         options: {
-            db: {native_parser: true},
-            server: {poolSize: 5},
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         },
         uri: process.env.MONGO_URL || 'mongodb://127.0.0.1/senterez'
     },
     porthttp: process.env.PORT || 3311,
+    host: process.env.HOST || '0.0.0.0',
     multicore: false,
     https: process.env.USE_HTTPS !== 'false',
     trustProxy: process.env.TRUST_PROXY === 'true',
     allowedOrigins: process.env.ALLOWED_ORIGINS || '*',
+    bindTokenToHost: process.env.BIND_TOKEN_TO_HOST === 'true',
     debug: process.env.NODE_ENV !== 'production',
     jwtSecret: process.env.JWT_SECRET || (process.env.NODE_ENV === 'production' ? null : 'senterez-dev-secret-change-in-production'),
     seedInitialAdmin: process.env.SEED_INITIAL_ADMIN === 'true',

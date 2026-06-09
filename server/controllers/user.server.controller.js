@@ -116,10 +116,11 @@ var generaTokenUser = function (id_user, req) {
   var newToken = {
     id_user: id_user,
     iat: moment().unix(),
-    exp: moment().add(3, "days").unix(),
-    host: requestIp.getClientIp(req)
+    exp: moment().add(3, "days").unix()
   };
-  //console.log(newToken)
+  if (config.bindTokenToHost) {
+    newToken.host = requestIp.getClientIp(req);
+  }
   return jwt.sign(newToken, SECRET_TOKEN);
 }
 
@@ -129,26 +130,17 @@ var getToken = function (req, next) {
   if (typeof bearerHeader !== 'undefined') {
     var bearer = bearerHeader.split(" ");
     bearerToken = bearer[1];
-    var token = jwt.decode(bearerToken, {
-      complete: true
-    });
-    try {
-      if ((token.payload.exp <= moment().unix())) {
-        next('token_expire')
-      } else {
-        //verificando mismo host de usuario
-        if (token.payload.host !== requestIp.getClientIp(req)) {
-          next('token_host_invalid')
-        } else {
-          next(null, token.payload)
-        }
+    jwt.verify(bearerToken, SECRET_TOKEN, function (err, payload) {
+      if (err) {
+        return next(err.name === 'TokenExpiredError' ? 'token_expire' : 'token_host_invalid');
       }
-    } catch (e) {
-      next('token_host_invalid')
-    }
-
+      if (config.bindTokenToHost && payload.host !== requestIp.getClientIp(req)) {
+        return next('token_host_invalid');
+      }
+      return next(null, payload);
+    });
   } else {
-    return next('token_not_found')
+    return next('token_not_found');
   }
 }
 exports.getToken = getToken

@@ -1,15 +1,7 @@
 <template>
     <div>
-        <md-dropdown-list>
-            <md-dropdown-item v-for="len in lenguajes" closing @click="changeLenguaje(len.value)">{{ len.label }}
-            </md-dropdown-item>
-        </md-dropdown-list>
-        <md-navbar title="Senterez ሰንጠረዥ" hamburger mode="hide-on-med-and-down" left nav-class="blue darken-4">
+        <md-navbar title="Senterez" hamburger mode="hide-on-med-and-down" left nav-class="blue darken-4">
             <md-nav-item v-link="{name: 'home',activeClass: 'active'}">{{ $t("home.title") }}</md-nav-item>
-            <!--
-            <md-nav-item v-link="{name: 'multiplayer',activeClass: 'active'}">Multijugador</md-nav-item>
-            <md-nav-item v-link="{name: 'createServer',activeClass: 'active'}">Crear servidor</md-nav-item>
-        -->
             <md-nav-item v-link="{name: 'game',activeClass: 'active'}">{{ $t("game.title") }}</md-nav-item>
             <md-nav-item @click="showInvitesGame()" v-if="user.user && $route.name!='game'">{{ $t("invites.title") }}
             </md-nav-item>
@@ -26,10 +18,6 @@
             <md-nav-item @click="logout()" v-if="user.user">{{ $t("user.logout") }}</md-nav-item>
 
             <md-nav-item @click="openModal()">{{ $t("about.title") }}</md-nav-item>
-            <md-nav-item href="javascript:void(0)" @click="openMenu($event)">
-                {{lenguajeName}}
-                <md-icon right>arrow_drop_down</md-icon>
-            </md-nav-item>
         </md-navbar>
         <div>
             <md-modal id="aboutModal">
@@ -82,36 +70,16 @@ import store from './vuex/store'
 import UserService from './services/user'
 import Board from './services/board'
 import UserInvites from './components/home/invites'
-import Lenguajes from './services/lenguajes'
 import Store from './services/lstorage'
 export default {
   data () {
     return {
       closeResult: '',
       user: UserService,
-      board: Board,
-      lenguajeName: 'አማርኛ',
-      lenguaje: Store.get('lenguaje', 'am'),
-      lenguajes: Lenguajes.lenguajes
+      board: Board
     }
   },
   methods: {
-    getLenguajeName () {
-      for (var i in this.lenguajes) {
-        if (this.lenguajes[i].value === this.lenguaje) {
-          this.lenguajeName = this.lenguajes[i].label
-        }
-      }
-    },
-    changeLenguaje (len) {
-      if (this.lenguaje !== len) {
-        Store.set('lenguaje', len)
-        window.location.reload()
-      }
-    },
-    openMenu (event) {
-      this.$broadcast('dropdown-list::open', event)
-    },
     openModal () {
       this.$broadcast('modal::open', 'aboutModal')
     },
@@ -161,10 +129,10 @@ export default {
     }
   },
   created () {
+    Store.set('lenguaje', 'en')
     this.testUser(function () {
       this.userLoguinSocket()
     }.bind(this))
-    this.getLenguajeName()
   },
   components: {
     UserInvites

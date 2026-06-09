@@ -1,8 +1,18 @@
 var controllers = {};
 var mongoose = require('mongoose');
-var fs = require('fs')
-var config=require('../config.js');
-var db = mongoose.connect(config.db.uri, config.db.options);
+var fs = require('fs');
+var config = require('../config.js');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.db.uri, config.db.options).then(function () {
+  console.log('MongoDB connected:', config.db.uri.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@'));
+}).catch(function (err) {
+  console.error('MongoDB connection failed:', err.message);
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  }
+});
+
 require('../models')(mongoose);
 
 var walk = function(path) {

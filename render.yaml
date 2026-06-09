@@ -1,5 +1,4 @@
 # Render.com — Senterez game server (API + Socket.IO)
-# Deploy at https://dashboard.render.com → New → Blueprint
 services:
   - type: web
     name: senterez-api
@@ -7,6 +6,7 @@ services:
     rootDir: server
     buildCommand: npm install
     startCommand: node server.js
+    healthCheckPath: /health
     plan: free
     envVars:
       - key: NODE_ENV
@@ -15,6 +15,8 @@ services:
         value: false
       - key: TRUST_PROXY
         value: true
+      - key: BIND_TOKEN_TO_HOST
+        value: false
       - key: JWT_SECRET
         generateValue: true
       - key: MONGO_URL

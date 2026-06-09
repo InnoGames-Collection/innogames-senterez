@@ -8,7 +8,7 @@
                 </div>
                 <div slot="body" style="max-height: 70vh;overflow: auto">
                     <md-input name="search" v-if="users.length>20" :value.sync="finduser">
-                        Buscar usuario
+                        Search player
                     </md-input>
                     <md-collection-list class="col s12 m12 l12">
                         <md-collection-list-item class="avatar" v-for="online in users | filterBy finduser"

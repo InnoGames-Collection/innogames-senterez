@@ -32,7 +32,7 @@
                         </thead>
                         <tr>
                             <td>
-                                Blancas
+                                {{ $t("account.activity.whites") }}
                             </td>
                             <td>
                                 {{statsUser.whitevsPC || 0}}
@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Negras
+                                {{ $t("account.activity.blacks") }}
                             </td>
                             <td>
                                 {{statsUser.blackvsPC || 0}}
@@ -68,7 +68,7 @@
                         </tr>
                         <tfoot style="background-color: #5f6161;border-top-style: groove;">
                         <th>
-                            Totales
+                            Total
                         </th>
                         <th>
                             {{(statsUser.blackvsPC || 0) + (statsUser.whitevsPC || 0)}}
@@ -119,7 +119,7 @@
                         </thead>
                         <tr>
                             <td>
-                                Blancas
+                                {{ $t("account.activity.whites") }}
                             </td>
                             <td>
                                 {{statsUser.whitevsOthersUsers || 0}}
@@ -137,7 +137,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Negras
+                                {{ $t("account.activity.blacks") }}
                             </td>
                             <td>
                                 {{statsUser.blackvsOthersUsers || 0}}
@@ -158,7 +158,7 @@
                         </tr>
                         <tfoot style="background-color: #5f6161;border-top-style: groove;">
                         <th>
-                            Totales
+                            Total
                         </th>
                         <th>
                             {{(statsUser.blackvsOthersUsers || 0) + (statsUser.whitevsOthersUsers || 0)}}
@@ -244,15 +244,15 @@ export default {
           columns: [
             {
               'type': 'date',
-              'label': 'Fecha'
+              'label': 'Date'
             },
             {
               'type': 'number',
-              'label': 'Visitas totales'
+              'label': 'Total visits'
             },
             {
               'type': 'number',
-              'label': 'Visitas únicas'
+              'label': 'Unique visits'
             }
           ]
         },
@@ -261,23 +261,23 @@ export default {
           columns: [
             {
               'type': 'date',
-              'label': 'Fecha'
+              'label': 'Date'
             },
             {
               'type': 'number',
-              'label': 'Jugados'
+              'label': 'Played'
             },
             {
               'type': 'number',
-              'label': 'Ganados'
+              'label': 'Wins'
             },
             {
               'type': 'number',
-              'label': 'Perdidos'
+              'label': 'Losses'
             },
             {
               'type': 'number',
-              'label': 'Rendido'
+              'label': 'Resigned'
             }
           ]
         }
@@ -288,7 +288,7 @@ export default {
           title: 'Chart Title',
           subtitle: 'Subtitle'
         },
-        hAxis: {title: 'Fecha'},
+        hAxis: {title: 'Date'},
         vAxis: {title: 'num'},
         height: 500,
         animation: {

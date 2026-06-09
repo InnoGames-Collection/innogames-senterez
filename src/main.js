@@ -71,7 +71,7 @@ if (Storage.get('token')) {
 // install plugin
 Vue.use(VueI18n)
 // ready translated locales
-const lan = Storage.get('lenguaje', 'am')
+const lan = 'en'
 const locales = locale.i18n
 Vue.config.lang = lan
 // set locales

@@ -2,9 +2,15 @@
   'use strict';
   let cluster = require('cluster');
   let config = require('./config.js');
+  if (process.env.NODE_ENV === 'production' && !config.jwtSecret) {
+    console.error('FATAL: JWT_SECRET must be set in production');
+    process.exit(1);
+  }
   let runServer = () => {
       require('./app')(process.cwd(), config, app => {
-        app.listen(config.porthttp)
+        app.listen(config.porthttp, config.host, function () {
+          console.log('Listening on ' + config.host + ':' + config.porthttp);
+        });
       });
   }
   if (config.multicore) {

@@ -41,7 +41,10 @@ module.exports = (appdir,config, cb) => {
 	if (config.allowedOrigins === '*') {
 		io.set('origins', '*:*');
 	} else {
-		io.set('origins', config.allowedOrigins + ':*');
+		var socketOrigins = config.allowedOrigins.split(',').map(function (origin) {
+			return origin.trim() + ':*';
+		}).join(' ');
+		io.set('origins', socketOrigins || '*:*');
 	}
 	if (config.trustProxy) {
 		app.set('trust proxy', 1);
@@ -70,13 +73,7 @@ module.exports = (appdir,config, cb) => {
 	if (config.debug) {
 		app.use(morgan("dev"));	
 	}
-
-// Set view engine
-app.set('views', __dirname + '/../views');
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-// Setting the app router and static folder
-//app.use(compression());
+	app.use(compression());
 let oneYear = 365 * 86400000;
 app.use(express.static(__dirname + '/../public', {maxAge: oneYear}));
 app.set('ipaddr', address);
@@ -101,7 +98,7 @@ io.adapter(redis({ host: 'localhost', port: 6379 }));
 io.attach(server);
 
 server.on('listening', function(){
-	console.log('Senterez ሰንጠረዥ server running at '+ (config.https?'https':'http')+'://' + app.get('ipaddr') + ':' + app.get('port'));
+	console.log('Senterez server running at '+ (config.https?'https':'http')+'://' + config.host + ':' + app.get('port'));
 });
 cb(server);
 };

@@ -1,8 +1,8 @@
 <div class="col s12">
     <md-modal id="usersConnect">
-        <h4 style="text-align: center">Usuarios conectados</h4>
+        <h4 style="text-align: center">Online players</h4>
         <md-input name="search" :value.sync="finduser">
-            Buscar usuario
+            Search player
         </md-input>
         <md-collection-list class="col s12 m12 l12">
             <md-collection-list-item class="avatar" v-if="user.username !== u.nickname"
@@ -26,7 +26,7 @@
             <md-input name="text" :value.sync="chattext" class="col s9 m9 l10">
                 {{ $t("game.text") }}
             </md-input>
-            <md-btn @mouseover="tooltip($event, 'Enviar Mensaje', 'top')"
+            <md-btn @mouseover="tooltip($event, 'Send message', 'top')"
                     class="btn waves-effect waves-light col s3 m3 l2 send-btn" type="submit">
                 S
             </md-btn>
@@ -68,11 +68,11 @@
                     @click="changeStyle('board')">
                 B
             </md-btn>
-            <md-btn @mouseover="tooltip($event, 'Rendirse', 'top')" class="waves-effect waves-light col s4 m4 l4"
+            <md-btn @mouseover="tooltip($event, 'Resign', 'top')" class="waves-effect waves-light col s4 m4 l4"
                     @click="rendir()">
                 {{ $t("game.rend") }}
             </md-btn>
-            <md-btn @mouseover="tooltip($event, 'Cambiar orientacion', 'top')"
+            <md-btn @mouseover="tooltip($event, 'Flip board', 'top')"
                     class="waves-effect waves-light col s4 m4 l4" @click="changeOrientation">
                 {{ $t("game.invert") }}
             </md-btn>
