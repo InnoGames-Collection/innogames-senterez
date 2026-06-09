@@ -31,7 +31,7 @@
       <h5 class="flat-text-header" style="float: center" v-if="board.wins || result.wins !==''">{{ $t("visor.result")
         }} </h5>
       <label v-if="board.wins || result.wins !==''">
-        {{ $t("visor.wins") }} {{ board.wins || result.wins }} {{ $t("visor.by") }} {{ board.motiv || result.motiv }}
+        {{ $t("visor.wins") }} {{ board.wins || result.wins }} {{ $t("visor.by") }} {{ formatMotiv(board.motiv || result.motiv) }}
       </label>
       <h5 class="flat-text-header" style="float: center">pgn</h5>
       {{ pgn }}
@@ -98,6 +98,13 @@ export default {
     }
   },
   methods: {
+    formatMotiv (motiv) {
+      if (!motiv) {
+        return ''
+      }
+      var label = this.$t('game.motives.' + motiv)
+      return label.indexOf('game.motives.') === 0 ? motiv : label
+    },
     stateFinishGame (state) {
       this.result = {
         wins: state.result.color,

@@ -367,16 +367,26 @@ export default {
     },
     gameState (state = {}) {
       if (state.motiv) {
-        var retorn = ''
-        retorn = state.motiv + ' ' + Vue.t('game.wins') + ' ' + state.color
+        if (state.color === 'draw') {
+          var drawMotiv = Vue.t('game.motives.' + state.motiv)
+          if (drawMotiv.indexOf('game.motives.') === 0) {
+            drawMotiv = state.motiv
+          }
+          return Vue.t('game.draw') + ' — ' + drawMotiv
+        }
+        var colorLabel = Vue.t('game.colors.' + state.color)
+        var motivLabel = Vue.t('game.motives.' + state.motiv)
+        if (motivLabel.indexOf('game.motives.') === 0) {
+          motivLabel = state.motiv
+        }
         if (state.motiv === 'timeout') {
           this.boardGameCountDown(0, state.color === 'white' ? 'black' : 'white')
         }
-        return retorn
+        return colorLabel + ' ' + Vue.t('game.wins') + ' ' + motivLabel
       }
       var gameOver = this.chess.game_over()
       if (this.chess.in_check() && !gameOver) {
-        return Vue.t('game.check') + ' ' + Vue.t('home.createPart.' + this.turn)
+        return Vue.t('game.incheck') + ' — ' + Vue.t('home.createPart.' + this.turn)
       }
       if (gameOver) {
         // is game over?
@@ -426,7 +436,7 @@ export default {
     rendir () {
       const result = {
         color: this.board.u1 === this.user.username ? 'black' : 'white',
-        motiv: 'rendicion'
+        motiv: 'resignation'
       }
       this.gameFinish(result)
     },

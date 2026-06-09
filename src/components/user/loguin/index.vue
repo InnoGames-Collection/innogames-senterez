@@ -88,7 +88,9 @@ export default {
         window.location.reload()
       })
       .catch(function (err) {
-        self.error = typeof err === 'string' ? err : 'network_error'
+        var key = typeof err === 'string' ? err : 'network_error'
+        var translated = self.$t('login.errors.' + key)
+        self.error = translated.indexOf('login.errors.') === 0 ? key : translated
       })
     }
   },

@@ -1,6 +1,23 @@
 export default {
   i18n: {
     en: {
+      common: {
+        error: 'Error',
+        notImplemented: 'Not available yet',
+        confirmDelete: 'Delete this item?',
+        confirmDeleteMessage: 'Delete this message?',
+        editMessageSoon: 'Message editing is not available yet',
+        next: 'Next',
+        minutes: 'minutes',
+        time: 'Time',
+        color: 'Color',
+        gender: 'Gender',
+        edit: 'Edit',
+        shareFile: 'Share file',
+        inviteToGame: 'Invite to game',
+        message: 'Message',
+        owner: 'InnoSphere Technologies'
+      },
       login: {
         title: 'Sign in',
         username: 'Username',
@@ -13,7 +30,12 @@ export default {
           consultando: 'Signing in...',
           waking_server: 'Starting game server, please wait...',
           network_error: 'Cannot reach game server. Open the site again in one minute, then retry sign in.',
-          service_unavailable: 'Game server is starting or database is unavailable. Try again shortly.'
+          service_unavailable: 'Game server is starting or database is unavailable. Try again shortly.',
+          internal_server_error: 'Server error. Please try again.',
+          email_required: 'Email is required',
+          username_required: 'Username is required',
+          error_unique_email: 'Email is already in use',
+          error_unique_username: 'Username is already taken'
         }
       },
       register: {
@@ -30,6 +52,7 @@ export default {
         femen: 'Female',
         age: 'Age',
         passwordRepit: 'Confirm password',
+        ageError: 'Enter a valid age',
         errors: {
           user_not_found: 'User not found',
           passw_incorrect: 'Incorrect password',
@@ -45,6 +68,7 @@ export default {
           created: 'Member since',
           edit: 'Edit profile'
         },
+        settings: 'Settings',
         activity: {
           title: 'Activity',
           vsPC: 'Stats vs computer',
@@ -54,6 +78,10 @@ export default {
           losses: 'Losses',
           whites: 'White',
           blacks: 'Black'
+        },
+        errors: {
+          userNotFound: 'User not found',
+          avatarUpdateFailed: 'Could not update profile image'
         }
       },
       home: {
@@ -87,7 +115,13 @@ export default {
         title: 'Invitations',
         numIn: 'Pending invitations',
         vspc: 'Play vs computer',
-        initgame: 'Starting game...'
+        initgame: 'Starting game...',
+        humanVsPc: 'Human vs computer',
+        waitingConfirm: 'Waiting for opponent confirmation...',
+        deleted: 'Invitation removed',
+        newInvite: 'You have a new game invitation',
+        confirmed: 'Game invitation confirmed',
+        confirmingStart: 'Confirming start...'
       },
       visor: {
         title: 'Game viewer',
@@ -96,7 +130,9 @@ export default {
         blackName: 'Black player',
         result: 'Result',
         wins: 'Wins',
-        by: 'by'
+        by: 'by',
+        winShort: 'W',
+        motiveShort: 'M'
       },
       puzzles: {
         title: 'Puzzles',
@@ -109,7 +145,11 @@ export default {
           cancel: 'Cancel',
           add: 'Adding puzzle...',
           fenInit: 'Starting position',
-          fenFinish: 'Solution position'
+          fenFinish: 'Solution position',
+          created: 'Puzzle created successfully',
+          selectType: 'Select a puzzle type first',
+          noMore: 'No more puzzles in this category',
+          confirmDelete: 'Delete this puzzle?'
         },
         list: 'Puzzle list',
         types: {
@@ -138,12 +178,13 @@ export default {
         attMen: 'Select a puzzle type to solve',
         createBy: 'Created by',
         date: 'Date',
-        played: 'Play',
+        played: 'Play as',
         movs: 'Moves remaining',
         wins: 'Correct',
         lost: 'Incorrect',
         reintent: 'Try again',
         intents: 'Attempts',
+        countFailed: 'Could not load puzzle count',
         color: {
           black: 'Black',
           white: 'White'
@@ -152,12 +193,12 @@ export default {
       about: {
         title: 'About',
         description: 'About Senterez',
-        namegame: 'Senterez',
+        namegame: 'Senterez ሰንጠረዥ',
         seemore: 'Source code',
-        des: 'Enterprise online chess platform. Play live multiplayer games, challenge the computer, solve puzzles, and review completed games.',
+        des: 'Enterprise online chess platform by InnoSphere Technologies. Play live multiplayer games, challenge the computer, solve puzzles, and review completed games.',
         tecn: 'Technology',
         dev: 'Developer',
-        developer: 'InnoSphere Technologies — in partnership with Ethio Telecom',
+        developer: 'InnoSphere Technologies',
         license: 'License',
         licenseText: 'Open source under GNU AGPL v3.0. See LICENSE and NOTICE in the repository.'
       },
@@ -173,12 +214,24 @@ export default {
         text: 'Message',
         descriptiontext: 'Send message',
         turnColor: 'Turn',
-        wins: 'Wins',
+        wins: 'wins',
         incheck: 'In check',
+        draw: 'Draw',
+        colors: {
+          white: 'White',
+          black: 'Black',
+          draw: 'Draw'
+        },
         motives: {
-          time: 'on time',
-          rendi: 'by resignation',
-          login: 'Sign in'
+          timeout: 'on time',
+          rendicion: 'by resignation',
+          resignation: 'by resignation',
+          checkmate: 'by checkmate',
+          stalemate: 'by stalemate',
+          drawn_position: 'drawn position',
+          threefold_repetition: 'by threefold repetition',
+          insufficient_material: 'by insufficient material',
+          draw: 'draw'
         }
       },
       user: {

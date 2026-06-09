@@ -70,17 +70,17 @@
                                     pathpermit="|jpeg|mp4|zip|rar|png|pdf|doc|docx|ppt|pptx|webm|txt"
                             >
                                 <a class="btn waves-effect waves-light col s3 m3 l3"
-                                   @mouseover="tooltip($event, 'Compartir archivo', 'top')">
+                                   @mouseover="tooltip($event, $t('common.shareFile'), 'top')">
                                     {{ $t("home.upload") }}
                                 </a>
                             </upload-files>
                             <a class="btn waves-effect waves-light col s3 m3 l3" @click="inviteChessGame()"
-                               @mouseover="tooltip($event, 'Invitar a partida', 'top')">
+                               @mouseover="tooltip($event, $t('common.inviteToGame'), 'top')">
                                 {{ $t("home.invite") }}
                             </a>
                         </div>
                         <md-input name="text" :value.sync="chattext" class="col s9 m9 l10">
-                            Texto
+                            {{ $t("common.message") }}
                         </md-input>
                         <md-btn class="btn waves-effect waves-light col s3 m3 l2 send-btn" type="submit">
                             {{ $t("home.send") }}

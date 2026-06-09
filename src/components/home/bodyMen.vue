@@ -52,13 +52,12 @@ export default {
       return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1
     },
     deleteMensaje (men, post) {
-      if (window.confirm('Desea eliminar realmente')) {
+      if (window.confirm(this.$t('common.confirmDeleteMessage'))) {
         this.mens.splice(post, 1)
-        console.log('elimino')
       }
     },
     editMen (men) {
-      window.alert('editando mensaje')
+      window.alert(this.$t('common.editMessageSoon'))
     }
   }
 }

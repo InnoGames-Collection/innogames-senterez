@@ -29,7 +29,7 @@
                     <tr v-for="board in foundList" @click="selectBoard(board)"
                         v-bind:class="[boardView._id === board._id ? 'item-select' : '']">
                         <td>{{ board.u1}} vs {{ board.u2}}</td>
-                        <td>G. {{ board.wins}} M.{{ board.motiv }}</td>
+                        <td>{{ $t("visor.winShort") }}. {{ board.wins}} {{ $t("visor.motiveShort") }}.{{ board.motiv }}</td>
                     </tr>
                     </tbody>
                 </table>

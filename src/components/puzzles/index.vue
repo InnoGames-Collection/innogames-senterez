@@ -22,7 +22,7 @@ export default {
           counts: theD
         }
       }, function (response) {
-        window.alert('no se pudo contar')
+        window.alert(this.$t('puzzles.countFailed'))
       })
     }
   },
@@ -43,19 +43,19 @@ export default {
         {
           numMoves: 1,
           type: 'MateIn1',
-          description: 'Las blancas ganan en un movimiento',
+          description: 'White wins in one move',
           position: false
         },
         {
           numMoves: 2,
           type: 'MateIn2',
-          description: 'Las blancas ganan en 2 movimientos',
+          description: 'White wins in two moves',
           position: false
         },
         {
           numMoves: 3,
           type: 'MateIn3',
-          description: 'Las blancas ganan en 3 movimientos',
+          description: 'White wins in three moves',
           position: false
         },
         {
@@ -92,7 +92,7 @@ export default {
         if (((post + 1) >= this.puzzles.length) && ((this.puzzlesType.indexOf(this.puzzleType) + 1) < this.puzzlesType.length)) {
           this.selectPuzzleType(this.puzzlesType[this.puzzlesType.indexOf(this.puzzleType) + 1])
         } else {
-          this.toast('<span>Ya no hay mas</span>', 2000)
+          this.toast('<span>' + this.$t('puzzles.create.noMore') + '</span>', 2000)
         }
       }
     },
@@ -133,7 +133,7 @@ export default {
     addPuzzle (mode) {
       this.mode = mode
       if (!this.puzzleType.type) {
-        this.toast('<span>Selecciona un tipo de puzzle</span>', 2000)
+        this.toast('<span>' + this.$t('puzzles.create.selectType') + '</span>', 2000)
         return
       }
       this.$broadcast('modal::open', 'modalCreatePuzzle')
@@ -174,7 +174,7 @@ export default {
           mode: this.mode
         }
         PuzzleService.add(this, newPuzzle).then(function (response) {
-          this.toast('<span>Creado correctamente</span>', 3000)
+          this.toast('<span>' + this.$t('puzzles.create.created') + '</span>', 3000)
           // actualizar listado
           this.selectPuzzleType(this.puzzleType)
           // seleccionar actual
@@ -200,7 +200,7 @@ export default {
       }.bind(this), 1000)
     },
     delPuzzle () {
-      if (window.confirm('Seguro de eliminar')) {
+      if (window.confirm(this.$t('puzzles.create.confirmDelete'))) {
         PuzzleService.del(this, this.item._id).then(function (response) {
           this.selectPuzzleType(this.puzzleType)
         }, function (response) {

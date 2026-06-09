@@ -86,8 +86,11 @@ export default {
       this.sendMensaje('file')
     },
     onFileError (file, res) {
-      this.toast('<span>Error ' + res + '</span>', 3000)
-      // console.error('onFileError', file, res)
+      var msg = Vue.t('home.uploadMens.' + res)
+      if (msg.indexOf('home.uploadMens.') === 0) {
+        msg = Vue.t('common.error') + ': ' + res
+      }
+      this.toast('<span>' + msg + '</span>', 3000)
     },
     onAllFilesUploaded (files) {
       // console.log('onAllFilesUploaded', files)
@@ -314,7 +317,7 @@ export default {
       }.bind(this))
     },
     activeWebcam () {
-      this.toast('<span>No implement yet</span>', 2000)
+      this.toast('<span>' + Vue.t('common.notImplemented') + '</span>', 2000)
     },
     inviteChessGame () {
       this.$broadcast('modal::open', 'inviteGame')

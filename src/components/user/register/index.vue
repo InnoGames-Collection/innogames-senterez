@@ -71,10 +71,9 @@ export default {
       if (!this.validUser() || !this.repitPasswordValidate() || !this.validPassword()) {
         return
       }
-      this.error = 'procesando'
+      this.error = this.$t('register.errors.consultando')
       UserService.signin(this, this.user).then(function (response) {
         console.log(response)
-        this.error = 'redireccionando'
         if (this.user._id) {
           window.location.reload()
         } else {
@@ -82,8 +81,9 @@ export default {
         }
       }, function (response) {
         for (var i in response.data.errors) {
-          // mostrando un solo error por el mommento
-          this.error = response.data.errors[i].message
+          var msg = response.data.errors[i].message
+          var translated = this.$t('login.errors.' + msg)
+          this.error = translated.indexOf('login.errors.') === 0 ? msg : translated
         }
       })
     }

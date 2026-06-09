@@ -21,7 +21,7 @@ export default {
           user: somedata
         }
       }.bind(this), function (response) {
-        window.alert('usuario no encontrado')
+        window.alert(this.$t('account.errors.userNotFound'))
         transition.redirect(UserService.getUser().username)
       })
     }
@@ -83,7 +83,7 @@ export default {
       UserService.setUser(this.user)
       UserService.signin(this, {_id: this.user._id, image: this.user.image}).then(function (response) {
       }, function (response) {
-        window.alert('error actualizando imagen usuario')
+        window.alert(this.$t('account.errors.avatarUpdateFailed'))
       })
     },
     onFileError (file, res) {

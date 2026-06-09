@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-navbar title="Senterez" hamburger mode="hide-on-med-and-down" left nav-class="blue darken-4">
+        <md-navbar title="Senterez ሰንጠረዥ" hamburger mode="hide-on-med-and-down" left nav-class="blue darken-4">
             <md-nav-item v-link="{name: 'home',activeClass: 'active'}">{{ $t("home.title") }}</md-nav-item>
             <md-nav-item v-link="{name: 'game',activeClass: 'active'}">{{ $t("game.title") }}</md-nav-item>
             <md-nav-item @click="showInvitesGame()" v-if="user.user && $route.name!='game'">{{ $t("invites.title") }}

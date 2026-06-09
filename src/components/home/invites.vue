@@ -21,7 +21,7 @@
                                                     alt=""> VS <img style="height: 50px;"
                                                                     src="../../../static/images/pieces/staunton/basic/Black-Queen.png"
                                                                     alt=""> {{ invite.u2 }}</span>
-          <p>Tiempo: {{ invite.time }} minutos {{[invite.event === 'confirmGame'? 'confirmando Iniciar ...': '']}}</p>
+          <p>{{ $t("common.time") }}: {{ invite.time }} {{ $t("common.minutes") }} {{[invite.event === 'confirmGame'? $t('invites.confirmingStart'): '']}}</p>
 
           <a class="secondary-content" @click="InviteGameAction(invite)"><i class="material-icons">grade</i></a>
           <a class="secondary-content" style="top: 50px" @click="deleteInvite(invite)"><i
@@ -30,10 +30,10 @@
       </md-collection>
     </md-modal>
     <md-modal id="invitePCGame">
-      <h4 style="text-align: center">HUMAN VS PC</h4>
+      <h4 style="text-align: center">{{ $t("invites.humanVsPc") }}</h4>
       <div class="col s12 m12 l12">
         <div class="col s6 m4 l4">
-          <p class="flat-text-header hello">Color</p>
+          <p class="flat-text-header hello">{{ $t("common.color") }}</p>
           <md-radio-group group="color" class="col s6">
             <md-radio :value.sync="newboard.color" radio-value="w" class="with-gap">
               {{ $t("home.createPart.white") }}
@@ -121,7 +121,7 @@ export default {
         data.f = 'addBoard'
         this.deleteInvite(invite)
       } else {
-        this.toast('<span>Esperando confirmacion de usuario</span>', 2000)
+        this.toast('<span>' + this.$t('invites.waitingConfirm') + '</span>', 2000)
       }
       this.$socket.emit('event', data, function (...callbacks) {
         if (callbacks[0]) {
@@ -136,7 +136,7 @@ export default {
       if (post !== -1) {
         this.invitesGame.splice(post, 1)
         Store.set('invitesGame', this.invitesGame)
-        this.toast('<span>Eliminada correctamente</span>', 2000)
+        this.toast('<span>' + this.$t('invites.deleted') + '</span>', 2000)
       }
     },
     pcGameInit () {
@@ -180,7 +180,7 @@ export default {
     inviteGame (data) {
       this.invitesGame.push(data)
       Store.set('invitesGame', this.invitesGame)
-      this.toast('<span>Tienes una nueva invitacion de juego</span>', 5000)
+      this.toast('<span>' + this.$t('invites.newInvite') + '</span>', 5000)
     },
     confirmGame (data) {
       if (!this.isAdding(data)) {
@@ -188,7 +188,7 @@ export default {
       }
       Store.set('invitesGame', this.invitesGame)
       this.$broadcast('modal::open', 'invitesGame')
-      this.toast('<span>Invitacion de juego confirmada</span>', 5000)
+      this.toast('<span>' + this.$t('invites.confirmed') + '</span>', 5000)
     },
     initGame (data) {
       // inicializando un tablero
