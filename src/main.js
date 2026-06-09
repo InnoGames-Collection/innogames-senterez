@@ -50,7 +50,17 @@ Vue.http.interceptors.push((request, next) => {
 })
 Storage.setPrefix('chessVuex')
 UserService.init()
-Vue.http.options.root = Storage.get('serverDir')
+var apiUrl = process.env.API_URL || ''
+var defaultApi = 'https://senterez-api.onrender.com'
+var dirServer = Dev
+  ? 'https://' + window.location.hostname + ':3311'
+  : (apiUrl || defaultApi)
+Storage.set('serverDir', dirServer)
+Vue.http.options.root = dirServer
+if (Storage.get('token')) {
+  var socket = SocketIO.connect(dirServer, { query: 'token=' + 'Bearer ' + Storage.get('token') })
+  Vue.use(VueSocketIO, socket)
+}
 Vue.filter('timeBoard', (s) => {
   var min = parseInt(s / 60)
   var segs = s % 60
@@ -59,16 +69,6 @@ Vue.filter('timeBoard', (s) => {
 Vue.filter('moment', (date, format) => {
   return Moment(date).format(format)
 })
-var apiUrl = process.env.API_URL || ''
-var dirServer = Dev
-  ? 'https://' + window.location.hostname + ':3311'
-  : (apiUrl || window.location.origin)
-dirServer = Storage.set('serverDir', dirServer)
-if (Storage.get('token')) {
-  var socket = SocketIO.connect(Storage.get('serverDir'), { query: 'token=' + 'Bearer ' + Storage.get('token') })
-  Vue.use(VueSocketIO, socket)
-}
-// install plugin
 Vue.use(VueI18n)
 // ready translated locales
 const lan = 'en'

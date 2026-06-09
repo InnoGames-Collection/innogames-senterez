@@ -3,7 +3,9 @@ var config = {
     db: {
         options: {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 10000,
+            connectTimeoutMS: 10000
         },
         uri: process.env.MONGO_URL || 'mongodb://127.0.0.1/senterez'
     },

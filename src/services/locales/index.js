@@ -10,7 +10,9 @@ export default {
         errors: {
           user_not_found: 'User not found',
           passw_incorrect: 'Incorrect password',
-          consultando: 'Signing in...'
+          consultando: 'Signing in...',
+          network_error: 'Cannot reach game server. Check your connection or try again in a minute.',
+          service_unavailable: 'Game server is starting or database is unavailable. Try again shortly.'
         }
       },
       register: {

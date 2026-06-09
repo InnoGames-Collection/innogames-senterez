@@ -7,7 +7,18 @@ var requestIp = require('request-ip');
 var config = require('../config.js');
 var SECRET_TOKEN = config.jwtSecret;
 
+var dbReady = function (res) {
+  if (mongoose.connection.readyState !== 1) {
+    res.status(503).send('service_unavailable');
+    return false;
+  }
+  return true;
+};
+
 exports.authenticate = function (req, res) {
+  if (!dbReady(res)) {
+    return;
+  }
   User.findOne({
     username: req.body.username
   }, function (err, user) {

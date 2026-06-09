@@ -59,21 +59,24 @@ export default {
       UserService.authenticate(this, this.user).then(r => {
         if (r.status === 200) {
           return r.text()
-        } else {
-          return r.text().then(d => {
-            throw d
-          })
         }
+        if (r.status === 0) {
+          throw 'network_error'
+        }
+        return r.text().then(d => {
+          throw d || 'network_error'
+        })
       })
-			.then(json => {
-  const data = JSON.parse(json)
-  Storage.set('token', data.token)
-  UserService.setUser(data.data)
-  this.$dispatch('userLoguin', 'user loguin')
-  window.location.reload()
-}).catch(err => {
-  this.error = err.text()
-})
+      .then(json => {
+        const data = JSON.parse(json)
+        Storage.set('token', data.token)
+        UserService.setUser(data.data)
+        this.$dispatch('userLoguin', 'user loguin')
+        window.location.reload()
+      })
+      .catch(err => {
+        this.error = typeof err === 'string' ? err : 'network_error'
+      })
     }
   }
 }
