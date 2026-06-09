@@ -1,0 +1,35 @@
+{
+  "name": "senterez-server",
+  "version": "1.0.0",
+  "description": "Senterez (ሰንጠረዥ) — real-time chess game server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "senterez",
+    "chess",
+    "socket.io"
+  ],
+  "author": "InnoSphere Technologies <contact@innosphere.et>",
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "async": "^1.5.2",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.0.0",
+    "chess.js": "^0.10.0",
+    "compression": "^1.6.2",
+    "ejs": "~1.0.0",
+    "engine.io-client": "^1.6.9",
+    "express": "4.x",
+    "formidable": "^1.0.17",
+    "jsonwebtoken": "latest",
+    "moment": "^2.12.0",
+    "mongoose": "latest",
+    "mongoose-unique-validator": "^1.0.2",
+    "morgan": "latest",
+    "request-ip": "^1.2.2",
+    "socket.io": "^1.4.6"
+  }
+}
