@@ -1,7 +1,7 @@
 import Storage from './lstorage'
 export default {
   authenticate (ctx, data) {
-    return ctx.$http.post(Storage.get('serverDir') + '/user/authenticate', data, { timeout: 30000 })
+    return ctx.$http.post(Storage.get('serverDir') + '/user/authenticate', data, { timeout: 90000 })
   },
   signin (ctx, data) {
     if (data._id) {

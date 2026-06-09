@@ -11,7 +11,8 @@ export default {
           user_not_found: 'User not found',
           passw_incorrect: 'Incorrect password',
           consultando: 'Signing in...',
-          network_error: 'Cannot reach game server. Check your connection or try again in a minute.',
+          waking_server: 'Starting game server, please wait...',
+          network_error: 'Cannot reach game server. Open the site again in one minute, then retry sign in.',
           service_unavailable: 'Game server is starting or database is unavailable. Try again shortly.'
         }
       },

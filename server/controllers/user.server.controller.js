@@ -186,8 +186,12 @@ var InstallInit = function () {
     console.warn('SEED_INITIAL_ADMIN is enabled but ADMIN_PASSWORD is not set. Skipping admin bootstrap.');
     return;
   }
-  setTimeout(function () {
+  var createAdminIfEmpty = function () {
     User.count({}, function (err, count) {
+      if (err) {
+        console.error('Admin seed check failed:', err.message);
+        return;
+      }
       if (count === 0) {
         console.log('Senterez: creating initial administrator account');
         var data = {
@@ -210,8 +214,15 @@ var InstallInit = function () {
             console.log('Initial administrator created:', config.admin.username);
           }
         });
+      } else {
+        console.log('Senterez: users exist, skipping admin seed (count=' + count + ')');
       }
     });
-  }, 3000);
+  };
+  if (mongoose.connection.readyState === 1) {
+    createAdminIfEmpty();
+  } else {
+    mongoose.connection.once('connected', createAdminIfEmpty);
+  }
 };
 InstallInit();

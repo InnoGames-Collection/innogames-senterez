@@ -54,30 +54,50 @@ export default {
     }
   },
   methods: {
+    wakeServer () {
+      var server = Storage.get('serverDir')
+      if (!server) {
+        return Promise.resolve()
+      }
+      this.error = 'waking_server'
+      return this.$http.get(server + '/health', { timeout: 90000 }).catch(function () {
+        return null
+      })
+    },
     userloguin () {
       this.error = 'consultando'
-      UserService.authenticate(this, this.user).then(r => {
+      var self = this
+      this.wakeServer().then(function () {
+        return UserService.authenticate(self, self.user)
+      }).then(function (r) {
         if (r.status === 200) {
           return r.text()
         }
         if (r.status === 0) {
           throw 'network_error'
         }
-        return r.text().then(d => {
+        return r.text().then(function (d) {
           throw d || 'network_error'
         })
       })
-      .then(json => {
+      .then(function (json) {
         const data = JSON.parse(json)
         Storage.set('token', data.token)
         UserService.setUser(data.data)
-        this.$dispatch('userLoguin', 'user loguin')
+        self.$dispatch('userLoguin', 'user loguin')
         window.location.reload()
       })
-      .catch(err => {
-        this.error = typeof err === 'string' ? err : 'network_error'
+      .catch(function (err) {
+        self.error = typeof err === 'string' ? err : 'network_error'
       })
     }
+  },
+  created () {
+    this.wakeServer().then(function () {
+      if (this.error === 'waking_server') {
+        this.error = ''
+      }
+    }.bind(this))
   }
 }
 </script>
