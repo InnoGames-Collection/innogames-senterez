@@ -13,24 +13,28 @@ License: [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE)
 - Game invitations and in-game chat
 - Chess puzzles (create, solve, and share)
 - Customizable board themes and piece sets
-- Multilingual UI (Amharic, English, Spanish)
+- Multilingual UI (Amharic, English)
 
 ## Partnership
 
-| Role | Organization |
-|------|----------------|
-| Development & hosting | InnoSphere Technologies |
-| Commercial distribution | Ethio Telecom |
+
+| Role                    | Organization            |
+| ----------------------- | ----------------------- |
+| Development & hosting   | InnoSphere Technologies |
+| Commercial distribution | Ethio Telecom           |
+
 
 ## Legal & compliance
 
-| Document | Purpose |
-|----------|---------|
-| [LICENSE](LICENSE) | AGPL-3.0 license |
-| [NOTICE.md](NOTICE.md) | Copyright and upstream attribution |
-| [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | Libraries and asset licenses |
-| [docs/SUBMISSION.md](docs/SUBMISSION.md) | Ethio Telecom submission pack |
-| [docs/SECURITY.md](docs/SECURITY.md) | Security posture and controls |
+
+| Document                                         | Purpose                            |
+| ------------------------------------------------ | ---------------------------------- |
+| [LICENSE](LICENSE)                               | AGPL-3.0 license                   |
+| [NOTICE.md](NOTICE.md)                           | Copyright and upstream attribution |
+| [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | Libraries and asset licenses       |
+| [docs/SUBMISSION.md](docs/SUBMISSION.md)         | Ethio Telecom submission pack      |
+| [docs/SECURITY.md](docs/SECURITY.md)             | Security posture and controls      |
+
 
 This project is derived from [vue-chess](https://github.com/gustaYo/vue-chess) (ISC)
 by Gustavo Crespo Sánchez. InnoSphere Technologies maintains Senterez as a
@@ -80,11 +84,13 @@ npm run dev
 Senterez uses a **split deployment** — Vercel cannot host the full game alone
 because multiplayer requires Socket.IO and MongoDB.
 
-| Component | Host |
-|-----------|------|
-| Frontend | **Vercel** + your custom domain |
-| Backend API + Socket.IO | **Render** (free tier) |
-| Database | **MongoDB Atlas** (free tier) |
+
+| Component               | Host                            |
+| ----------------------- | ------------------------------- |
+| Frontend                | **Vercel** + your custom domain |
+| Backend API + Socket.IO | **Render** (free tier)          |
+| Database                | **MongoDB Atlas** (free tier)   |
+
 
 Full step-by-step guide: **[docs/GITHUB-VERCEL-RENDER-SETUP.md](docs/GITHUB-VERCEL-RENDER-SETUP.md)** (click-by-click dashboard settings)
 
@@ -100,8 +106,7 @@ Quick summary:
 ## Production deployment (InnoSphere server)
 
 1. Copy `.env.example` to `.env` and set:
-
-   ```bash
+  ```bash
    NODE_ENV=production
    JWT_SECRET=<64+ character random secret>
    MONGO_URL=mongodb://127.0.0.1/senterez
@@ -109,27 +114,21 @@ Quick summary:
    ADMIN_USERNAME=admin
    ADMIN_PASSWORD=<strong password>
    ADMIN_EMAIL=admin@innosphere.et
-   ```
-
+  ```
 2. Build frontend and publish static assets:
-
-   ```bash
+  ```bash
    npm install
    npm run build
    rm -rf server/public/static
    cp -r dist/static server/public/static
    cp dist/index.html server/views/client.html
-   ```
-
+  ```
 3. Place TLS certificates behind nginx (use Ethio Telecom CA or Let's Encrypt).
-   Do not use self-signed certificates in production.
-
+  Do not use self-signed certificates in production.
 4. Start server with environment loaded:
-
-   ```bash
+  ```bash
    cd server && node server.js
-   ```
-
+  ```
 5. After first admin is created, set `SEED_INITIAL_ADMIN=false`.
 
 ## Initial administrator
@@ -145,7 +144,7 @@ Senterez does not include ads, analytics SDKs, or external tracking scripts.
 
 ## Contact
 
-InnoSphere Technologies — contact@innosphere.et
+InnoSphere Technologies — [contact@innosphere-tech.com](mailto:contact@innosphere.et)
 
 ## Enjoy Senterez
 
