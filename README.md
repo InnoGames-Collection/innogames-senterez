@@ -86,7 +86,9 @@ because multiplayer requires Socket.IO and MongoDB.
 | Backend API + Socket.IO | **Render** (free tier) |
 | Database | **MongoDB Atlas** (free tier) |
 
-Full step-by-step guide: **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**
+Full step-by-step guide: **[docs/GITHUB-VERCEL-RENDER-SETUP.md](docs/GITHUB-VERCEL-RENDER-SETUP.md)** (click-by-click dashboard settings)
+
+Architecture overview: **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**
 
 Quick summary:
 
