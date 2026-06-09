@@ -4,6 +4,12 @@ var fs = require('fs');
 var config = require('../config.js');
 
 mongoose.Promise = global.Promise;
+mongoose.set('strictQuery', false);
+
+mongoose.connection.on('error', function (err) {
+  console.error('MongoDB connection error:', err.message);
+});
+
 mongoose.connect(config.db.uri, config.db.options).then(function () {
   console.log('MongoDB connected:', config.db.uri.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@'));
 }).catch(function (err) {

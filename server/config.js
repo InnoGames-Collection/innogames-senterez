@@ -2,9 +2,8 @@
 var config = {
     db: {
         options: {
-            useMongoClient: true,
-            connectTimeoutMS: 10000,
-            socketTimeoutMS: 45000
+            serverSelectionTimeoutMS: 10000,
+            connectTimeoutMS: 10000
         },
         uri: process.env.MONGO_URL || 'mongodb://127.0.0.1/senterez'
     },

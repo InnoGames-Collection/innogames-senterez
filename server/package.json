@@ -26,8 +26,8 @@
     "formidable": "^1.0.17",
     "jsonwebtoken": "latest",
     "moment": "^2.12.0",
-    "mongoose": "4.13.21",
-    "mongoose-unique-validator": "^1.0.2",
+    "mongoose": "6.12.8",
+    "mongoose-unique-validator": "3.1.0",
     "morgan": "latest",
     "request-ip": "^1.2.2",
     "socket.io": "^1.4.6"
