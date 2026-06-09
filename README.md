@@ -42,7 +42,8 @@ production fork with security hardening and compliance documentation.
 
 ## Requirements
 
-- **Node.js 18 LTS** (recommended)
+- **Node.js 18 LTS** for local dev and Render backend
+- **Node.js 24.x** for Vercel (required by platform; set in `package.json` `engines`)
 - **MongoDB** 4.x or later
 - **OpenSSL** (for HTTPS in development)
 

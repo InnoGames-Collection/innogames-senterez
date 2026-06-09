@@ -74,7 +74,7 @@ Render dashboard → senterez-api → Settings → Custom Domain →
 | Root Directory | `.` (project root) |
 | Build Command | `npm install && npm run build` |
 | Output Directory | `dist` |
-| Node.js Version | 18.x |
+| Node.js Version | **24.x** (set via `engines` in `package.json`) |
 
 4. **Environment variable** (required):
 
@@ -167,7 +167,7 @@ For Ethio Telecom production traffic, upgrade Render and Atlas to paid tiers.
 | CORS errors | Set `ALLOWED_ORIGINS` on Render to exact Vercel domain |
 | Socket connection failed | Ensure Render service is awake; check browser console |
 | `JWT_SECRET must be set` | Add `JWT_SECRET` in Render env vars |
-| Build fails on Vercel | Set Node.js version to **18.x** in project settings |
+| Build fails on Vercel | Ensure `package.json` has `"engines": { "node": "24.x" }`; check build logs |
 
 ---
 

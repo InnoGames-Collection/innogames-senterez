@@ -144,7 +144,8 @@ Replace with `https://api.yourdomain.com` when custom domain is ready.
 
 ### D3. Node.js version
 
-After first deploy: **Settings** → **General** → **Node.js Version** → **18.x**
+Node.js **24.x** is required on Vercel (via `engines` in root `package.json`).  
+For local dev and Render backend, **Node 18** still works.
 
 ### D4. Deploy
 
@@ -204,7 +205,7 @@ At your domain registrar (e.g. Ethio Telecom DNS, Cloudflare, Namecheap):
 
 | Symptom | Fix |
 |---------|-----|
-| Vercel build fails | Set Node 18; check build logs for missing deps |
+| Vercel build fails | Use Node 24.x in `package.json` engines; check build logs for missing deps |
 | `JWT_SECRET must be set` on Render | Add `JWT_SECRET` env var, redeploy |
 | CORS error on login | Match `ALLOWED_ORIGINS` exactly to Vercel URL (no trailing slash) |
 | Socket.IO fails | Confirm `API_URL` in Vercel; wake Render service |

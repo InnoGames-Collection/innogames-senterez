@@ -27,7 +27,7 @@
   "author": "InnoSphere Technologies <contact@innosphere.et>",
   "license": "AGPL-3.0-or-later",
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   },
   "bugs": {
     "url": "https://github.com/innosphere-technologies/senterez/issues"
