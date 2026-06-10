@@ -199,14 +199,19 @@ export default {
       var Width = document.getElementById('puzzleBoard').clientWidth
       document.getElementById('puzzleBoard').style.height = Width + 'px'
       document.getElementById('puzzleBoard').style.width = Width + 'px'
-      // getFromLocalStorage
-      console.log('cargando board')
-      this.loadPuzzle()
+      if (this.puzzle && this.puzzle.feninit) {
+        this.loadPuzzle(this.puzzle.feninit)
+      }
     }.bind(this), 10)
   },
   watch: {
-    puzzle (newVal, oldVal) {
-      this.loadPuzzle(newVal.feninit)
+    puzzle: {
+      handler: function (newVal) {
+        if (newVal && newVal.feninit && this.ground && this.ground.set) {
+          this.loadPuzzle(newVal.feninit)
+        }
+      },
+      deep: true
     }
   }
 }

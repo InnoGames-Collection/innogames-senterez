@@ -110,23 +110,31 @@ exports.deletePuzzle = (req, res) => {
 	})
 }
 
-var InitPuzzles = () => {
-	setTimeout(function() {
-		Puzzle.count({}, function(err, count) {
-			if (count === 0) {
-				for (var i in puzzlesInitDefault) {
-					var newPuzzle = new Puzzle(puzzlesInitDefault[i]);
-					newPuzzle.save(function(err, puzzle) {
-						// console.log(puzzle)
-					});
-				}
-			} else {
-				// console.log('ya hay puzzles por defecto')
+var InitPuzzles = function () {
+	Puzzle.count({}, function (err, count) {
+		if (err) {
+			console.error('Puzzle seed check failed:', err.message)
+			return
+		}
+		if (count === 0) {
+			console.log('Senterez: seeding default puzzles...')
+			for (var i in puzzlesInitDefault) {
+				var newPuzzle = new Puzzle(puzzlesInitDefault[i])
+				newPuzzle.save(function (saveErr) {
+					if (saveErr) {
+						console.error('Puzzle seed save failed:', saveErr.message)
+					}
+				})
 			}
-		})
-	}, 3000);
+		}
+	})
 }
-InitPuzzles()
+
+if (mongoose.connection.readyState === 1) {
+	InitPuzzles()
+} else {
+	mongoose.connection.once('connected', InitPuzzles)
+}
 
 var puzzlesInitDefault = [
 {

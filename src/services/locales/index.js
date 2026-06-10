@@ -92,6 +92,7 @@ export default {
         invite: 'Invite',
         send: 'Send',
         inviteSend: 'Game invitation sent',
+        inviteSelectPlayer: 'Open a chat with a player from the online list, then send the invite',
         createPart: {
           title: 'New game',
           time: 'Time (minutes)',
@@ -121,7 +122,14 @@ export default {
         deleted: 'Invitation removed',
         newInvite: 'You have a new game invitation',
         confirmed: 'Game invitation confirmed',
-        confirmingStart: 'Confirming start...'
+        confirmingStart: 'Confirming start...',
+        errors: {
+          user_played: 'You already have an active game',
+          user_desconect: 'That player is offline',
+          another_user_played: 'That player is already in a game',
+          not_found: 'Game not found',
+          not_authenticated: 'Please sign in again to play online'
+        }
       },
       visor: {
         title: 'Game viewer',

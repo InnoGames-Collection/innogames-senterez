@@ -34,6 +34,7 @@ export default {
         time: '3',
         public: true
       },
+      timePersonal: false,
       users: [],
       usersLength: 0,
       games: [],
@@ -45,10 +46,10 @@ export default {
   ],
   events: {
     users (data) {
-      this.users = data.nicknames
+      this.users = data.nicknames || {}
     },
     boards (data) {
-      this.boards = data.boards
+      this.boards = data.boards || []
     },
     mensaje (data) {
       this.recibeMensaje(data.men, true)
@@ -100,7 +101,30 @@ export default {
     }
   },
   props: {},
-  computed: {},
+  computed: {
+    usersList () {
+      if (Array.isArray(this.users)) {
+        return this.users
+      }
+      if (this.users && typeof this.users === 'object') {
+        return Object.keys(this.users).map(function (key) {
+          return this.users[key]
+        }.bind(this))
+      }
+      return []
+    },
+    boardsList () {
+      if (Array.isArray(this.boards)) {
+        return this.boards
+      }
+      if (this.boards && typeof this.boards === 'object') {
+        return Object.keys(this.boards).map(function (key) {
+          return this.boards[key]
+        }.bind(this))
+      }
+      return []
+    }
+  },
   components: {
     BoardVisor,
     UploadFiles,
@@ -287,7 +311,7 @@ export default {
               this.loadUserConvert(parmsLoad)
             }
           }
-          this.boards = callbacks[1].boards
+          this.boards = callbacks[1].boards || []
         }.bind(this))
       }.bind(this), 500)
     },
@@ -320,10 +344,19 @@ export default {
       this.toast('<span>' + Vue.t('common.notImplemented') + '</span>', 2000)
     },
     inviteChessGame () {
+      if (this.active === 'boardVisor') {
+        this.toast('<span>' + Vue.t('home.inviteSelectPlayer') + '</span>', 3000)
+        return
+      }
       this.$broadcast('modal::open', 'inviteGame')
     },
     createdInviteGame (result) {
       if (result) {
+        if (this.active === 'boardVisor') {
+          this.toast('<span>' + Vue.t('home.inviteSelectPlayer') + '</span>', 3000)
+          this.$broadcast('modal::close', 'some', 'inviteGame')
+          return
+        }
         var invite = {
           type: 'invite',
           public: false,
@@ -359,6 +392,11 @@ export default {
       this.loadAllData()
     }.bind(this), 1000)
     this.$dispatch('userLoguin', 'show data')
+  },
+  sockets: {
+    connect () {
+      this.loadAllData()
+    }
   }
 }
 </script>

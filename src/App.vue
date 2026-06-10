@@ -102,7 +102,10 @@ export default {
       }
     },
     userLoguinSocket () {
-      if (this.user.user_acces()) {
+      if (!this.user.user_acces() || !this.$socket) {
+        return
+      }
+      var registerUser = function () {
         const data = {
           c: 'chat',
           f: 'username',
@@ -110,11 +113,15 @@ export default {
             user: UserService.getUser()
           }
         }
-        setTimeout(function () {
-          this.$socket.emit('event', data, function (...callbacks) {
-            // console.log(callbacks[1])
-          })
-        }.bind(this), 100)
+        this.$socket.emit('event', data, function () {})
+      }.bind(this)
+      if (this.$socket.connected) {
+        registerUser()
+      } else {
+        this.$socket.once('connect', registerUser)
+        if (!this.$socket.connecting) {
+          this.$socket.connect()
+        }
       }
     }
   },
@@ -124,6 +131,9 @@ export default {
     }
   },
   sockets: {
+    connect () {
+      this.userLoguinSocket()
+    },
     event (data) {
       this.$broadcast(data.event, data.data ? data.data : data)
     }

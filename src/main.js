@@ -27,7 +27,7 @@ import '../static/css/animate.min.css'
 import Storage from './services/lstorage'
 import UserService from './services/user'
 import VueSocketIO from 'vue-socket.io'
-import SocketIO from 'socket.io-client'
+import SocketService from './services/socket'
 import locale from './services/locales'
 Vue.use(VueMaterialComponents)
 Vue.use(Router)
@@ -58,8 +58,10 @@ var dirServer = Dev
 Storage.set('serverDir', dirServer)
 Vue.http.options.root = dirServer
 if (Storage.get('token')) {
-  var socket = SocketIO.connect(dirServer, { query: 'token=' + 'Bearer ' + Storage.get('token') })
-  Vue.use(VueSocketIO, socket)
+  var socket = SocketService.connect()
+  if (socket) {
+    Vue.use(VueSocketIO, socket)
+  }
 }
 Vue.filter('timeBoard', (s) => {
   var min = parseInt(s / 60)

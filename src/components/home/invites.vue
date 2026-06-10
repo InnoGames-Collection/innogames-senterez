@@ -85,7 +85,7 @@ export default {
     toast
   ],
   methods: {
-    initGame (game) {
+    startGameCountdown (game) {
       this.$route.router.go('/')
       Store.set('board', game)
       this.$broadcast('modal::open', 'initGame')
@@ -111,7 +111,6 @@ export default {
       })
     },
     InviteGameAction (invite) {
-      // preparar tablero
       var data = {
         c: 'board',
         f: 'confirmGame',
@@ -125,11 +124,18 @@ export default {
       }
       this.$socket.emit('event', data, function (...callbacks) {
         if (callbacks[0]) {
-          window.alert(callbacks[0])
+          var errKey = callbacks[0]
+          var msg = this.$t('invites.errors.' + errKey)
+          if (msg.indexOf('invites.errors.') === 0) {
+            msg = errKey
+          }
+          this.toast('<span>' + msg + '</span>', 4000)
+          return
         }
-      })
-      // this.deleteInvite(invite)
-      // eliminar invitacion del arreglo
+        if (data.f === 'addBoard' && callbacks[1]) {
+          this.startGameCountdown(callbacks[1])
+        }
+      }.bind(this))
     },
     deleteInvite (invite) {
       var post = this.invitesGame.indexOf(invite)
@@ -191,8 +197,7 @@ export default {
       this.toast('<span>' + this.$t('invites.confirmed') + '</span>', 5000)
     },
     initGame (data) {
-      // inicializando un tablero
-      this.initGame(data)
+      this.startGameCountdown(data)
     }
   }
 }

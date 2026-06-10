@@ -4,6 +4,7 @@ var Board = mongoose.model('boards');
 var boards= {};
 var async = require('async');
 var userController= require('./chat.server.controller');
+var socketUtil = require('./socket.util.js');
 var useFork = false
 
 var userIsPlayed = (user) => {
@@ -25,20 +26,20 @@ var changeBoards = (someBoard, method) => {
 }
 
 exports.confirmGame = (io,socket,dta,next) => {
-	// usuario invitado confirma que quiere juegar la partida indicada
 	var nicknames = userController.getNicknames(io)
 	var otherUser = dta.u1 === socket.nickname.nickname ? dta.u2 : dta.u1
-	if(nicknames[otherUser]){
+	if (nicknames[otherUser]) {
 		dta.event = 'confirmGame'
 		dta.confirm = true
-		io.sockets.connected[nicknames[otherUser].socket].emit("event", dta);
+		socketUtil.emitToUser(io, nicknames, otherUser, dta)
 	}
-	nicknames = {}
+	next(null, {})
 }
 
 exports.addBoard = (io,socket,dta,next) => {
-	// crear nuevo tablero
-	// verificar que usuarios no tienen un tablero abierto
+	if (!socket.nickname) {
+		return next('not_authenticated')
+	}
 	var nicknames = userController.getNicknames(io)
 	var otherUser = dta.u1 === socket.nickname.nickname ? dta.u2 : dta.u1
 	// usuario actual tiene un juego abierto
@@ -55,8 +56,8 @@ exports.addBoard = (io,socket,dta,next) => {
 	}
 	var newBoard= new Board(dta);
 	newBoard.save(function(err, board) {
-		if(err){
-			next(err.message)
+		if (err) {
+			return next(err.message)
 		}
 		socket.boardr = board._id;
 		board.times = {}
@@ -65,17 +66,18 @@ exports.addBoard = (io,socket,dta,next) => {
 		var data= {
 			event: 'boards',
 			data: {
-				boards: boards
+				boards: socketUtil.boardsToArray(boards)
 			}
 		}
 		io.sockets.emit('event', data);
 		var nicknames = userController.getNicknames(io);
-		// unir ambos usuarios a la nueva sala
 		if (dta.u1 !== 'PC' && nicknames[dta.u1]) {
-			io.sockets.connected[nicknames[dta.u1].socket].join(board._id);
+			var s1 = socketUtil.getSocketById(io, nicknames[dta.u1].socket)
+			if (s1) s1.join(board._id)
 		}
 		if (dta.u2 !== 'PC' && nicknames[dta.u2]) {
-			io.sockets.connected[nicknames[dta.u2].socket].join(board._id);
+			var s2 = socketUtil.getSocketById(io, nicknames[dta.u2].socket)
+			if (s2) s2.join(board._id)
 		}
 		socket.join(board._id)
 		// iniciar juego de sala
@@ -91,10 +93,10 @@ exports.addBoard = (io,socket,dta,next) => {
 
 exports.inviteGame = (io,socket,dta,next) => {
 	var nicknames = userController.getNicknames(io)
-	if(nicknames[dta.data.recibe]){
-		io.sockets.connected[nicknames[dta.data.recibe].socket].emit("event", dta);
+	if (nicknames[dta.data.recibe]) {
+		socketUtil.emitToUser(io, nicknames, dta.data.recibe, dta)
 	}
-	nicknames = {}
+	next(null, {})
 }
 
 var closeGame = (io, dta, next) => {
@@ -131,11 +133,10 @@ var closeGame = (io, dta, next) => {
 	var data= {
 		event: 'boards',
 		data: {
-			boards: boards
+			boards: socketUtil.boardsToArray(boards)
 		}
 	}
 	io.sockets.emit('event', data);
-	// eliminar sala del socket pendiente		
 }
 next(null, {})
 }

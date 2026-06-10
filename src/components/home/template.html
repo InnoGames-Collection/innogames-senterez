@@ -7,11 +7,11 @@
                     {{ $t("home.online") }}
                 </div>
                 <div slot="body" style="max-height: 70vh;overflow: auto">
-                    <md-input name="search" v-if="users.length>20" :value.sync="finduser">
+                    <md-input name="search" v-if="usersList.length>20" :value.sync="finduser">
                         Search player
                     </md-input>
                     <md-collection-list class="col s12 m12 l12">
-                        <md-collection-list-item class="avatar" v-for="online in users | filterBy finduser"
+                        <md-collection-list-item class="avatar" v-for="online in usersList | filterBy finduser"
                                                  @click="openTab(online)" v-show="online.id !== user._id">
                             <img v-bind:src="imageUrl(online.image)" alt="" class="circle">
                             <span class="title">{{ online.nickname }}</span>
@@ -32,7 +32,7 @@
                 <div slot="body">
                     <div slot="body" style="max-height: 70vh;overflow: auto">
                         <md-collection>
-                            <md-collection-item v-for="game in boards" @click="showBoard(game)">
+                            <md-collection-item v-for="game in boardsList" @click="showBoard(game)">
                                 <span class="title"> {{ game.u1 }} <img style="height: 25px;"
                                                                         src="../../../static/images/pieces/merida/wQ.svg"
                                                                         alt=""> VS <img style="height: 25px;"
